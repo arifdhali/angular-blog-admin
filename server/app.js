@@ -26,16 +26,15 @@ app.post("/login", (req, res) => {
             let token = jwt.sign({ user: result[0] }, "test-secret");
             res.cookie(
                 'token',
-                token,                                
+                token,
                 {
                     maxAge: 2 * 24 * 60 * 60 * 1000
                 }
-                
+
             );
             let d = {
                 status: true,
                 message: "Login successful",
-                data: result[0]
             }
             return res.json(d)
 
@@ -49,6 +48,19 @@ app.post("/login", (req, res) => {
     })
 
 })
+
+app.post("/logout", (req, res) => {
+    res.clearCookie('token');
+    return res.json({
+        status: true,
+        message: "Logout successful"
+    })
+
+});
+
+const verifyUser = (req, res, next) => {
+
+}
 
 
 app.listen(PORT, (err) => {
